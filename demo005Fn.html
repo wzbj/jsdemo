@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	/*
+		函数扩展
+			函数默认值
+	*/
+	function fn1(x,y){
+		// 通过编码实现x,y的处理，如果不传参的话设置默认值
+		var x = x || 0;
+	}
+
+	function fn2( x = 0,y = 0){//在形参中设置默认值，如果形参中不是所有的参数都有默认值，那么有默认值的通常写在形参后面
+		console.log(x,y);
+	}
+	fn2();//0 0 
+	fn2(1,2);//1 2
+
+	function fn4(obj = {x:1,y:2}){
+		console.log(obj);
+	}
+	fn4({x:10,y:22})
+
+	/*
+		rest剩余参数
+	*/
+
+	// function  arrayPush(arr,x,y,z){//不定参
+		/*es5*/
+	// function arrayPush(){
+	// 	var arr = arguments[0];
+	// 	for(var i=1;i<arguments.length;i++){
+	// 		arr.push(arguments[i]);
+	// 	}
+	// }
+	// var arr1 = [1,2,3];
+	// arrayPush(arr1,'a','b','c');
+	// console.log(arr1);
+
+	function arrayPush6(arr,...newData){//从第二个参数开始，后面的数据全部赋值给newData这个参数/注意：剩余参数只能写在列表的最后面
+		for(var i=0; i<newData.length;i++){
+			arr.push(newData[i]);
+		}
+	}
+
+	var arr2 = [1,2,3];
+	arrayPush6(arr2,'a','b','c');
+	// console.log(arr2);
+
+
+	/*
+		箭头函数  
+			使用函数表达式
+	*/
+
+	let fn8 = () => {console.log('fn1')};
+	// let fn8 = function(){console.log('fn1')};
+	fn8();
+
+	let fn9 = (x,y) => {
+		console.log(x+y);
+	}
+	fn9(1,3);
+
+	/*
+		当参数有且只有一个的时候，()可以省略
+	*/
+	let fn10 = (x) => {
+		console.log(x+100);
+	}
+	fn10(11);
+	// 可以把上面这个只有一个形参的方法进行简化
+	let fn11 = x => {
+		console.log(x+100);
+	}
+	fn11(11);
+
+	// 返回值
+	// let fn12 = x =>{
+	// 	retruen x+100;
+	// }
+	// 如果函数体内有且只有一条语句，那么{}语句可以省略，return也是可以省略的，仅有的这一条语句的执行结果就是该函数的返回值，不需要return语句
+	let fn12 = x => x + 100;
+	console.log(fn12(1));
+
+	// 如果多余1条语句，或者返回的值是一个字面量对象{}，那么函数的{}就不能省略
+	//let fn14 = (x,y) => {a:x,b:y}  //不行的，这里的{}是函数的{}，而不是对象的
+	let fn15 = (x,y) => {
+		return {
+			// a:x,
+			// b:y
+			x,
+			y
+		}
+	}
+
+	/*
+		箭头函数---注意事项
+		1.内部this对象只想创建期上下文对象 普通函数的this只想是在函数的执行期绑定的(确定的)
+	
+	*/
+
+	function fn16(){
+		console.log(this);//根据调用不同
+	}
+	fn16();//this指向window
+	var obj = {};
+	obj.f = fn16;
+	obj.f();//this 指向obj
+	document.onclick = fn16;//指向触发该事件的对象document
+
+	// 箭头函数的this在函数创建期间就绑定好了，箭头函数的this指向创建该箭头函数的所在的作用域对象(this)
+	let fn17 = () =>{
+		console.log(this);//创建一瞬间绑定的
+	} 
+	fn17();
+	document.onclick = fn17;//fn17内部的this永远都是fn7函数声明的时候所在的this对象
+
+	
+	
+
+
+</script>
+</html>

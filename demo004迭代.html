@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	/*
+		对象简介法：当对象key与对应的属性所引用的变量或函数同名的时候，可以简写成一个
+	*/
+
+	var a =1;
+	var fn = function(){}
+
+	var obj = {
+		a:a,
+		fn:fn
+	}
+
+	// 简写
+	var obj = {
+		a,
+		fn
+	}
+
+	/*
+		属性名表达式
+	*/
+	var x = 'test';
+	var obj1 = {
+		[x]:1
+	}
+	obj1['x'] = 1;
+	console.log(obj1);//{x: 1}
+	obj1['x1'] = 1;
+	console.log(obj1);//{x: 1, x1: 1}
+	obj1[x] =1;
+	console.log(obj1);//{x: 1, x1: 1, test: 1}
+
+	/*
+		迭代协议：规定了迭代与实现的逻辑
+		迭代器：具体的迭代实现逻辑
+		迭代对象：可被迭代的对象 -[Symbol.iterator]方法
+		迭代语句：
+		for ...in以原始插入的舜玉迭代对象的可枚举属性
+		for ...of 根据迭代对象的迭代器具体实现迭代对象数据
+		
+	*/
+
+	var arr = ['a','b','c','d'];
+	// for(var attr in arr){
+	// 	console.log(attr,arr[attr]);//
+	// }
+
+	for(var attr of arr){
+		console.log(attr);
+	}
+
+	var elements = document.querySelectorAll('*');
+	for(var attr of elements){//of 是一个可迭代的对象
+		console.log(attr);
+	}
+
+	var obj = {
+		top:100,
+		left:200
+	}
+
+	obj[Symbol.iterator] = function(){
+		// let a =1;
+		let keys = Object.keys(obj);//[left,top]
+		let len = keys.length;
+		var n = 0;
+		return {
+			next:function(){
+
+				if(n < len){
+					return {
+						value:obj[keys[n++]],
+						done:false
+					}
+				}else{
+					return{
+						done:true
+					}
+				}
+
+
+				// a++;
+				// if(a<10){
+				// 	return{
+				// 		value:a,
+				// 		done: false
+				// 	}
+				// }else{
+				// 	return{
+				// 		value:'',
+				// 		done: true
+				// 	}
+				// }
+					
+			}
+		}
+	}
+
+	for(var attr of obj){
+		console.log(attr);
+	}
+
+
+	
+</script>
+</html>

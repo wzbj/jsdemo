@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<ul>
+		<li>111</li>
+		<li>222</li>
+		<li>333</li>
+	</ul>
+</body>
+<script type="text/javascript">
+	var lis = document.querySelectorAll('li');
+
+	for(let i=0;i<lis.length;i++){
+		lis[i].onclick = function(){
+			// setTimeout(function(){
+			// 	this.style.background = 'red';//报错
+			// },1000)
+			let fn = ()=> {
+				this.style.background = 'red';
+
+			}
+			setTimeout(fn,1000);
+		}
+	}
+
+	function fn1(){
+		console.log(arguments);
+	}
+	fn1(1,2,3);
+
+	let fn2 = () => {
+		console.log(arguments);//arguments is not defined
+	}
+	fn2();
+</script>
+</html>

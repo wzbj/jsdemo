@@ -55,10 +55,17 @@
 		let b =2;
 		const c =3;
 	}
-	console.log(a);
-	console.log(b);
-	console.log(c);
+	// console.log(a);
+	// console.log(b);
+	// console.log(c);
 
+	const arr1 = [1,2,3];
+	arr1.push(4);
+	console.log(arr1);//[1, 2, 3, 4]
+
+	const arr2 = Object.freeze([1,2,3])//freeze冻结  只能冻结一层，如果数组里面还有数组，是可以继续改变的 。用递归方法解决
+
+	console.log(Object.isFrozen(arr2));//true   当前对象是冻结状态
 
 </script>
 </html>
