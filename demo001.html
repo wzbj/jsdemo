@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>构造函数</title>
+</head>
+<body>
+	
+</body>
+<script>
+	// function person(name,gender){
+	// 	this.name = name;
+	// 	this.gender = gender;
+	// }
+	// var p1 = new person('wzzz','男');
+	// console.log(p1);
+	// console.log(p1.gender);
+
+
+	// var Person = (function(){
+	// 	var _gender = '';//受保护的私有属性
+	// 	function P(name,gender){
+	// 		this.name = name;
+	// 		// this.gender = gender;
+	// 		_gender = gender;
+	// 	}
+	// 	P.prototype.getGender = function(){
+	// 		return _gender;
+	// 	}
+	// 	return P;
+	// })()
+
+	// var p1 = new Person('wzzz','男');
+	// console.log(p1);
+	// console.log(p1.getGender());
+
+	// symbol
+	var Person = (function(){
+		let _gender =  Symbol('gender');
+		function P(name,gender){
+			this.name = name;
+			this[_gender] = gender;
+		}
+		P.prototype.say = function(){
+			console.log(this[_gender]);
+		}
+		return P;
+	})()
+	var p1 = new Person('wzzz','男');
+	console.log(p1);
+	console.log(p1[Symbol('gender')]);//与上面的Symbol('gender')不是一回事
+
+	{
+		var  a = 1;
+		let b =2;
+		const c =3;
+	}
+	console.log(a);
+	console.log(b);
+	console.log(c);
+
+
+</script>
+</html>

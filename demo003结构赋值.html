@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>解构赋值</title>
+</head>
+<body>
+	
+	
+</body>
+<script>
+	let arr = [1,2,3];
+	let [a,b,c] = arr;
+	console.log(a,b,c)
+
+	let {foo,bar} =  {foo:'aaa',bar:'bbbb'};//左侧中变量必须存在，是key对应，解构的顺序不需要对应
+	console.log(bar,foo);
+
+	let {left:L,top:T} = {left:100,top:200}
+	console.log(L,T)
+
+	// 多重解构
+	let { foo1 : [a1,b1] } = {foo1:[10,20],bar1:'bbbb'};
+	console.log(a1,b1);
+
+	let [a2] = 'mini';//可迭代
+	console.log(a2);
+
+	// getComputedStyle(document.body).left;
+	// getComputedStyle(document.body).top;
+	// getComputedStyle(document.body).width;
+	// getComputedStyle(document.body).height;
+
+	let style = getComputedStyle(document.body);
+	style.left;
+	style.top;
+	style.width;
+	style.height;
+
+	let {L1,T1,W1,H1} = getComputedStyle(document.body);
+
+	/*
+		扩展运算符
+		...
+		把数组/对象转成参数序列(使用逗号分隔的序列)
+		['a','b','c'] => 'a','b','c'
+		{left:100,top:200} => left:100,top:200
+	*/
+
+	var arr1 = [1,2,5,4,7];
+	var arr2 = [1,'a','b','c'];
+	// ...arr;//1,2,5,4,7
+	console.log(Math.max(...arr1));//接受的是1,2,3，
+	console.log([...arr1,...arr2]);//[1, 2, 5, 4, 7, "a", "b", "c"]
+
+	let obj1 = {left:100,top:200};
+	let obj2 = {width:100,height:200};
+	let obj3 = {//合并对象
+		...obj1,
+		...obj2
+	}
+	console.log(obj3);
+
+
+	/*
+		Unicode
+	
+	*/
+	console.log('\u0061');
+	// console.log('\u1F602');
+	console.log('\u{1F602}');
+
+
+</script>
+</html>

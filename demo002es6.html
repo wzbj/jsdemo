@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		button.active{
+			background: yellow;
+		}
+		p{
+			display: none;
+		}
+		p.active{
+			display: block;
+		}
+
+	</style>
+</head>
+<body>
+	<button class="active">选项一</button>
+	<button>选项二</button>
+	<button>选项三</button>
+	<p class="active">内容一</p>
+	<p>内容二</p>
+	<p>内容三</p>
+</body>
+<script>
+	var buttons = document.querySelectorAll('button');
+	var ps = document.querySelectorAll('p');
+	console.log(ps);
+	// for(var i=0; i<buttons.length; i++){
+	// 	buttons[i].index = i;
+	// 	buttons[i].onclick = function(){
+	// 		console.log(this.index);
+
+	// 		for(var i=0; i<buttons.length; i++){
+	// 			buttons[i].className = '';
+	// 			ps[i].className = '';
+	// 		}
+
+	// 		this.className = 'active';
+	// 		ps[this.index].className = 'active';
+	// 	}
+	// }
+
+	for(let i=0; i<buttons.length; i++){
+		buttons[i].index = i;
+		buttons[i].onclick = function(){
+			console.log(this.index);
+
+			for(let i=0; i<buttons.length; i++){
+				buttons[i].className = '';
+				ps[i].className = '';
+			}
+
+			this.className = 'active';
+			ps[i].className = 'active';
+		}
+	}
+</script>
+</html>
