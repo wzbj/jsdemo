@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Set</title>
+</head>
+<body>
+	
+</body>
+<script>
+	/*
+		Set  
+			类似数组，但是值是无序的
+			无重复值
+			Set.add(value)  添加一个数据，返回Set解构本身
+			Set.delete(value) 删除指定数据，返回一个布尔值，表示是否删除成功
+			Set.has(value)  判断该值是否为Set的成员,返回一个布尔值，表示删除是否成功
+			Set.clear()  清除所有数据，没有返回值
+			keys()  返回键名的遍历器
+			values()  返回键值的遍历器
+			entries()  返回键值对的遍历器
+			forEach() 使用回调函数遍历每个成员
+
+	*/
+
+	// 扩展运算符
+
+	// let s1 = new Set();
+	// s1.add('a');
+	// s1.add('a');
+	// console.log(s1);
+
+	let s2 = new Set(['a','b','c','d']);
+	console.log(s2.keys());
+	console.log(s2.values());
+	console.log(s2.entries());
+	s2.forEach(function(value,key,set){
+		console.log(value + 'wz');
+	})
+
+	
+
+	
+
+	let arr1 = ['a','b','c','a','c'];
+	arr1 = [...new Set(arr1)];
+	console.log(arr1);
+
+	for(let v of new Set(arr1)){
+		console.log(v);
+	}
+
+	let f = 10;
+	function fn(){
+		// f = 7;//暂时性死区
+		// console.log(f);
+		let f = 2;
+		console.log(f);
+	}
+
+	fn();
+
+	for(let i=0;i<3;i++){
+		// let i = 10;
+		console.log(i);
+	}
+
+	let {length:len} = 'miao';
+
+	console.log(len);
+
+
+</script>
+</html>

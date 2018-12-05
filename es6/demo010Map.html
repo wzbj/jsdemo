@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Map</title>
+</head>
+<body>
+	
+</body>
+<script>
+	/*
+		数据结构 Map
+			字典：是用来存储不重复key的Hash结构，不同于集合(Set)的是，字典使用的是[键,值]的形式来储存数据的
+	*/
+	var data1 = {a:1}, data2 = {b:2},obj = {};
+	obj[data1] = 1;
+	obj[data2] = 2;
+	console.log(obj);
+	console.log(data1.toString());
+	console.log(data1.toString() === data2.toString());//true
+
+	// 创建Map
+	const map = new Map([
+		['a',1],
+		['b',2]
+	]);
+	console.log(map);
+
+	// Map类的属性
+	console.log(map.size);
+	
+	// Map类的方法
+		// set(key,value)设置键名key对应的键值为value，然后返回整个Map结构，如果key已有值，则键值会被更新，否则重新生成该值
+		map.set('wz','test').set('new','jjj');
+		console.log(map);
+
+		// get(key)  get方法读取key对应的键值，如果找不到key，返回undefined
+		console.log(map.get('new'));
+
+		//delete(key)  删除某个键，返回true，如果删除失败，返回false
+		console.log(map.delete('new'));
+
+		// has(key)  has方法返回一个布尔值，表示某个键是否在当前Map对象之中
+		console.log(map.has('wz'));
+
+		// clear()  清除所有数据，没有返回值
+
+		// keys()  fanhui 键名遍历器
+
+
+
+		// map的键是与内存地址绑定的，内存地址不一样，就被认为是两个键
+
+		// map里面的key的排列顺序是按照添加顺序进行排列的
+
+
+	/*
+		Interator
+			Interator是这样的一种机制(统一的接口机制，来处理不同的数据接口[es6新增set,map两种数据结构，及js之前的数组和对象])
+			为各种不同的数据结构提供统一的访问机制，任何数据结构只需部署Interator接口，就可以完成遍历操作，而且这种遍历操作是
+			依次处理的数据结构的所有成员
+		作用
+			为各种数据结构，提供一个统一的访问接口
+			使得数据结构的成员能够按某种顺序排列
+			ES6新增了for  of循环，Interator接口主要供for of消费
+
+	*/
+
+	// 手写Interator接口
+	const arr = [1,2,3];
+	function interator(arr){
+		let index = 0;
+		return {
+			next:function(){
+				return index <arr.length ? 
+				{value:arr[index++],done:false} : 
+				{value:undefined,done:true} ; 
+			}
+		}
+	}
+
+	const it = interator(arr);
+	console.log(it.next());
+	console.log(it.next());
+	console.log(it.next());
+	console.log(it.next());//已经遍历完成
+
+	// 凡是具有Symbol.iterator 属性的数据结构都具有  Iterator接口
+
+	var obj = {};
+	console.log(obj[Symbol.iterator]);//undefined
+
+
+	//具备iterator接口的数据数据结构可以进行如下操作
+		// 结构赋值
+		// -扩展运算符
+
+	// let [x,y] = set;
+
+	//   ... 
+	let str  = 'wztest';
+	let arrStr = [...str];
+	console.log(arrStr);
+
+	// 如何给一个不具备interator接口的数据结构部署一个interator接口？
+	const d = {
+		'0' : 'm',
+		'1' : 'i',
+		'2' : 'a',
+		'3' : '0',
+		'4' : 'v',
+		length:5
+	}
+
+</script>
+</html>

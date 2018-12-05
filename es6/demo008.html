@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+
+	// Object.assign() --合并对象
+		// 注意：浅拷贝
+	let obj1 =  Object.assign({x:10},{x:1,y:2},{z:100});//已有对象，后者覆盖前者  深拷贝用递归来实现
+	console.log(obj1);
+
+	// Object.create()  创建对象,赋给了obj2的__proto__
+	let obj2 = Object.create({a:1,b:2});
+	console.log(obj2);
+
+	// Object.freeze()  冻结对象
+
+
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+	// Object.defineProperty(); --定义属性
+		// 通过. , [] 等方式添加或修改的属性可以枚举 configurable、enumerable、value默认为true
+	let obj4 = {x:1};
+	obj4.y = 10;
+
+	Object.defineProperty(obj4,'z',{
+		//描述了该属性的一些详细信息
+		value:100,
+		writable:true,//writable为true时，value才能被赋值运算符改变。默认为 false
+		enumerable:true//enumerable为true时，该属性才能够出现在对象的枚举属性中。默认为 false。
+	})
+	console.log(obj4);
+
+	for(let attr in obj4){
+		console.log(attr);
+	}
+
+	let obj5 = {x:1};
+	// Object.prototype.xx = 100;//可以遍历原型链对象，这种enumerable默认为true
+	Object.defineProperty(obj4,'z',{
+		//描述了该属性的一些详细信息
+		value:100,
+		enumerable:false
+	})
+	for(let attr in obj5){
+		console.log(attr);
+	}
+
+</script>
+</html>

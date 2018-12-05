@@ -107,6 +107,16 @@
 	
 	*/
 
+	document.onclick = function(){
+		// this -> document;
+		function fn(){
+			console.log(this);//这个this在调用的时候绑定
+		}
+		let fn = () => {
+			console.log(this);//箭头函数this在声明的一瞬间就绑定好了，里面的this是剪头函数作用域的this
+		}
+	}
+
 	function fn16(){
 		console.log(this);//根据调用不同
 	}

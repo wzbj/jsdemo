@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	/*
+		Array
+	*/
+	// includes
+	console.log(['a','b','c'].includes('c'));//判断是否存在
+
+	var arr1 = ['a','b','c'];
+
+	// arr1.forEach(function(v,k,s){//s 第三个参数
+	// 	console.log(v,k,s);
+	// 	console.log(this);
+	// },arr1)//第二个参数，arr1改变this指向
+
+	function arrEach(data,callback,context){
+		for(var i=0; i<data.length; i++){
+			callback.call(context,data[i],i,data);
+		}
+	}
+
+	// arrEach(arr1,function(v,k,s){//s 第三个参数
+	// 	console.log(v,k,s);
+	// 	console.log(this);
+	// },arr1)//第二个参数，arr1改变this指向
+
+	// every
+	let arr2 = [1,6,8,2,4,10];//全选功能
+		// [...inputs]  先把input转成数组
+ 	let rs = arr2.every( v => {
+		return v>5;//是否都满足这个条件，都满足返回true,否则返回false
+	})
+	console.log(rs);
+
+	let rs1 = arr2.some( v => {//多选一功能
+		return v>5;//只有一个满足条件，就返回true
+	})
+	console.log(rs1);
+
+	// filter 过滤  新数组的值是原数组中的其中某个，但是新数组长度可能不一样
+	let arr3 = arr2.filter(v => {
+		return v>5;
+	})
+	console.log(arr3);
+	// map  一一映射的关系  新数组和原数组不一致，但长度是一致的
+	let arr4 = arr2.map( v => {
+		// return v>5;
+		return v*10;
+	})
+	console.log(arr4);
+
+	// reduce  拆分
+	// let arr5 = arr2.reduce( v => {
+	let rs3 = arr2.reduce(function(prev,current){
+		return prev + current;
+	},0)//0表示结果的初始值
+	console.log(rs3);
+
+</script>
+</html>
