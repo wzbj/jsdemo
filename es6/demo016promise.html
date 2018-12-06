@@ -13,8 +13,118 @@
 			是ES6中新增的异步编程解决方案，体现在代码中它是一个对象，可以通过Promise构造函数来实例化
 			new Promise(cb) ===> 实例的基本使用  pengding Resolved   Rejected
 
-			>两个原型方法
-			Promise
+			>两个原型方法  处理异步操作之后的异常
+			Promise.prototype.then()
+			promise.prototype.catch()
+
+			>两个常用的静态方法
+			Promise.all()
+			Promise.resolve()
+		
+		new Promise(cb);
+		pengding(进行中) ===>  Resolved(已完成)
+		pengding(进行中) ===>  Rejected(已失败)
 	*/
+
+	const imgs = [
+		'http://img.tupianzj.com/uploads/allimg/170215/9-1F215120633.jpg',
+		'http://s4.sinaimg.cn/mw690/001ve3i3zy6SziUdgH143&690',
+		'http://pic.qiantucdn.com/58pic/22/06/55/57b2d98e109c6_1024.jpg'
+	]
+
+	// const p = new Promise(function(resolve,reject){
+	// 	const img = new Image();
+	// 	// img.src = imgs[0];
+	// 	img.src ='';
+	// 	img.onload = function(){
+	// 		resolve(this);
+	// 	};
+	// 	img.onerror = function(err){
+	// 		reject(new Error('图片加载失败'));
+	// 	}
+	// });
+	// console.log(1233);
+	// p.then(function(img){
+	// 	console.log('加载完成');
+	// 	document.body.appendChild(img);
+	// },function(err){
+	// 	console.log(err);
+	// });
+	// p.then(function(img){
+	// 	console.log('加载完成');
+	// 	document.body.appendChild(img);
+	// }).catch(function(err){
+	// 	console.log(err);
+	// });
+	// console.log(456);
+
+
+	function loadImg(url){
+		const p = new Promise(function(resolve,reject){
+			const img = new Image();
+			// img.src = imgs[0];
+			img.src =url;
+			img.onload = function(){
+				resolve(this);
+			};
+			img.onerror = function(err){
+				reject(new Error('图片加载失败'));
+			}
+		});
+		return p;
+	}
+
+	loadImg(imgs[0]).then(function(img){
+		document.body.appendChild(img);
+	})
+
+	/*
+		Promise.all 可以将多个Promise实例包装成一个新的Promise实例
+		当所有的Promise实例的状态都变成resolved,Promise.all的状态才会变成resolved，此时返回值组成一个数组，传递给then中的resolve函数
+		只要其中有一个被rejected，Promise.all的状态就变成rejected，此时第一个reject的实例的返回值，会传递给p的回调函数
+	*/
+
+	// const allDone = Promise.all([loadImg(imgs[0]),loadImg(imgs[1]),loadImg('')])
+
+	// allDone.then(function(datas){
+	// 	// console.log(datas);
+	// 	datas.forEach(function(item,i){
+	// 		document.body.appendChild(item);
+	// 	})
+	// }).catch(function(err){
+	// 	console.log(err);
+	// })
+
+
+	// 参数是promise实例，将不做任何修改，原封不动地返回这个实例
+	// Promise.resolve(loadImg(imgs[0])).then(function(img){
+	// 	document.body.appendChild(img);
+	// })
+
+	// Promise.resolve({
+	// 	then(resolve,reject){
+	// 		const img = new Image();
+	// 		img.src = imgs[1];
+	// 		img.onload = function(){
+	// 			resolve(this);
+	// 		}
+	// 	}
+	// }).then(function(img){
+	// 	document.body.appendChild(img);
+	// })
+
+
+
+	// 参数是一个基本数据类型或者不传参数，那么返回的是一个状态为resolved的Promise对象
+
+	Promise.resolve('wztest').then(function(str){
+		console.log(str);
+	})
+
+	const p1 = Promise.resolve();
+	console.log(p1);
+
+
+
 </script>
 </html>

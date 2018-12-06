@@ -11,6 +11,8 @@
 	/*
 		数据结构 Map
 			字典：是用来存储不重复key的Hash结构，不同于集合(Set)的是，字典使用的是[键,值]的形式来储存数据的
+
+			映射：它类似于对象，但是key值可以任何类型的值，而不仅仅局限于字符串
 	*/
 	var data1 = {a:1}, data2 = {b:2},obj = {};
 	obj[data1] = 1;
@@ -111,6 +113,55 @@
 		'4' : 'v',
 		length:5
 	}
+
+	/*---------------------------------------------------------------------------------*/
+	// 私有的数据保护
+	const Person = (function(){
+		// let _gender = '';
+
+		let _gender = [
+			// {obj:''}
+		]
+
+		function PP(name,gender){
+			this.name = name;
+			// _gender = gender;
+
+			_gender.push({
+				obj:this,//pp1
+				gender
+			})
+		}
+
+		PP.prototype.getGender = function(){
+			return _gender;
+
+			// return _gender.find(function(o){
+			// 	return o.obj == this;
+			// })
+
+			// 返回当前调用getgenders方法的对象，对应的gender
+			return _gender.find(o => o.obj == this).gender;
+		}
+
+		PP.prototype.setGender = function(newGender){
+			// 限制newGender的值范围，比如只能传入 男 或 女
+			_gender = newGender;
+		}
+
+		PP.getgenders = function(){
+			return _gender;
+		}
+
+		return PP;
+	})();
+
+	let pp1 = new Person('wz','男');
+	let pp2 = new Person('hah','男');
+
+	// pp2.setGender('女');
+	// console.log(pp1.getGender());
+	// console.log(pp2.getGender());
 
 </script>
 </html>
