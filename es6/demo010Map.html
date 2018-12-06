@@ -119,37 +119,49 @@
 	const Person = (function(){
 		// let _gender = '';
 
-		let _gender = [
-			// {obj:''}
-		]
+		// let _gender = [// {obj:''}];
+		// let _gender = new Map();
+		let _gender = new WeakMap();//性能上会有一定的提升
 
 		function PP(name,gender){
 			this.name = name;
 			// _gender = gender;
 
-			_gender.push({
-				obj:this,//pp1
-				gender
-			})
+			// _gender.push({
+			// 	obj:this,//pp1
+			// 	gender
+			// })
+
+			_gender.set(this,gender);
 		}
 
 		PP.prototype.getGender = function(){
-			return _gender;
+			// return _gender;
 
 			// return _gender.find(function(o){
 			// 	return o.obj == this;
 			// })
 
 			// 返回当前调用getgenders方法的对象，对应的gender
-			return _gender.find(o => o.obj == this).gender;
+			// return _gender.find(o => o.obj == this).gender;
+
+			return _gender.get(this);
 		}
 
 		PP.prototype.setGender = function(newGender){
 			// 限制newGender的值范围，比如只能传入 男 或 女
-			_gender = newGender;
+			// _gender = newGender;
+
+			// _gender.forEach( o => {
+			// 	if(this == o.obj){
+			// 		o.gender = newGender;
+			// 	}
+			// })
+
+			_gender.set(this,newGender)
 		}
 
-		PP.getgenders = function(){
+		PP.getGenders = function(){
 			return _gender;
 		}
 
@@ -159,9 +171,29 @@
 	let pp1 = new Person('wz','男');
 	let pp2 = new Person('hah','男');
 
-	// pp2.setGender('女');
-	// console.log(pp1.getGender());
-	// console.log(pp2.getGender());
+	pp2.setGender('女');
+	console.log(pp1.getGender());
+	console.log(pp2.getGender());
+
+	setInterval(function(){
+		console.log(Person.getGenders());
+	},1000)
+
+
+	/*------------------------------------------------------*/
+	let students = [
+		{name:'aaa'},
+		{name:'bbb'},
+		{name:'ccc'},
+	];
+	// 添加状态 map.set();
+
+	/*
+		WeakMap  
+			映射：类似Map，但是key必须是对象，特点是key是弱引用的，GC机制不考虑回收问题
+			案例：数据私有化优化
+	*/
+
 
 </script>
 </html>

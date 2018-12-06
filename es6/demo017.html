@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>异步编程</title>
+</head>
+<body>
+	<button>按钮</button>
+	<div></div>
+</body>
+<script>
+	var btn = document.querySelector('button');
+	var div = document.querySelector('div');
+	btn.onclick = function(){
+		// 同步操作
+		alert('hello');//耗时，用户不确定，任务不继续
+	}
+
+	// 异步
+	let i = 0;
+	setInterval(() => {
+		div.innerHTML = i++;
+	},100);//设置这个值不是准确是，会延后。会在主线程任务执行完才去执行
+
+	// callback hell 回调地狱
+	// setInterval(() => {
+	// 	console.log(1);
+	// 	setInterval(() => {
+	// 		console.log(2);
+	// 		setInterval(() => {
+	// 			console.log(3);
+	// 		},1000);
+	// 	},1000);
+	// },1000);
+
+
+	/*解决异步编程问题*/
+		/*
+			Promise
+				构造函数
+				接受一个参数：callback，我们把要执行的异步任务放置在这个callback
+				Promise对象内部会维护一个状态  --默认是pending状态
+	
+		*/
+
+	let p1 = new Promise( () => {
+		// 当Promise被实例化的时候，callback中的异步任务就会被执行
+		setTimeout( () => {
+			console.log(1);
+		},1000)
+	})
+
+	console.log(p1);
+
+
+</script>
+</html>
