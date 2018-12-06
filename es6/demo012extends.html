@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>class继承--重力小球</title>
+	<style>
+		canvas{
+			box-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+	/*
+		extends、static、
+		子类继承父类，使用extends关键字
+		为父类指定静态方法，使用static方法名字
+		super:
+			-在构造函数中可以当一个函数来使用，相当于调用父类的构造函数
+			-在原型方法中，可以当一个对象来使用，相当于父类的原型对象，并且会自动绑定this到子类上
+	*/
+	const canvas = document.querySelector('#canvas');
+	const ctx = canvas.getContext('2d');
+
+	const w = canvas.width = 600;
+	const h = canvas.height = 400;
+	/*const test = 1.11;
+	console.log(~~test);//1*/
+
+	class Ball{
+		constructor(x,y,r){
+			this.x = x;
+			this.y = y;
+			this.r = r;
+			this.color = `rgb(${~~Ball.rpFn([55,255])},${~~Ball.rpFn([55,255])},${~~Ball.rpFn([55,255])})`;//~~两个波浪号去掉小数点
+			return this;
+		}
+
+		render(ctx){
+			ctx.save();
+			ctx.translate(this.x,this.y);
+			ctx.fillStyle = this.color;
+			ctx.beginPath();
+			ctx.arc(0,0,this.r,0,2*Math.PI);
+			ctx.fill();
+			ctx.restore();
+			return this;
+		}
+
+
+		static rpFn(arr){ //Ball.rpFn[1,10]
+			let max = Math.max(...arr);
+			let min = Math.min(...arr);
+			return Math.random() * (max - min) + min;
+		}
+	}
+
+	// const ball = new Ball(100,100,30).render(ctx);
+
+	class SuperBall extends Ball{
+		constructor(x,y,r){
+			// super 1当函数使用  当子类继承父类的时候不仅仅会继承属性，还会继承静态方法
+			// Ball.call(this,x,y,r);//es5
+			super(x,y,r);
+			this.vy = SuperBall.rpFn([2,4]);
+			this.g = SuperBall.rpFn([0.2,0.4]);
+			this.a = 0;
+			return this;
+		}
+
+		move(ctx){
+			// super();//报错，只能在constructor使用
+			this.y += this.vy;
+			this.vy += this.g;
+			let current = this.vy * -0.75;
+			if(this.y+this.r >= ctx.canvas.height){
+				this.y = ctx.canvas.height -this.r;
+				if(Math.abs(current - this.a)<0.01){
+					return false;
+				}
+				this.a = this.vy *= -0.75;
+			}
+
+			ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);//清除画布
+			// super  2.
+			super.render(ctx)
+
+			return true;
+		}
+	};
+
+	// const ball = new SuperBall(100,100,30).render(ctx)
+
+	let ball,timer;
+
+	canvas.onclick = function(e){
+		let x = e.offsetX, y = e.offsetY;
+		let r = ~~Ball.rpFn([25,55]);
+		// console.log(r);
+		ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);//清除画布
+		ball = new SuperBall(x,y,r).render(ctx);
+		ballMove();
+	}
+
+	function ballMove(){
+		timer = window.requestAnimationFrame(ballMove);
+		if(!ball.move(ctx)){
+			window.cancelAnimationFrame(timer);
+		}
+	}
+
+
+
+
+
+
+</script>
+</html>

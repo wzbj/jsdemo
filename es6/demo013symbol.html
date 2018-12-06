@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Symbol</title>
+</head>
+<body>
+	
+</body>
+<script>
+	/*
+		Symbol  表示独一无二的值，它是js中的第七种数据类型
+			基本数据类型：null,undefined,Number,Boolean,String,Symbol
+			引用数据类型：Object
+	*/
+
+	let s1 = Symbol();
+	let s2 = Symbol();
+	console.log(s1);
+	console.log(typeof s1);
+	console.log(s1 === s2);//false
+
+	// Symbol函数不能使用new，否则会报错。原因在于Symbol是一个原始类型的值，不是对象
+	// let s3 = new Symbol();// 错误
+
+	//Symbol接受一个字符串作为参数，表示对Symbol的描述，主要是为了在控制台显示，或者转为字符串的时候，比较容易区分 
+	let s4 = Symbol('wz');
+	let s5 = Symbol('test');
+	console.log(s4);//Symbol(wz)
+	console.log(s5);//Symbol(test)
+
+	console.log(Symbol('wz') === Symbol('wz'));//false
+
+	//  2.Symbol的数据转换
+	console.log(String(Symbol('wz')));//Symbol(wz)
+	console.log(Symbol('wz').toString());//Symbol(wz)
+
+	console.log(!!Symbol());//true
+
+	// console.log(Number(Symbol()));//报错了，不能转换为数字
+
+	// 不能使用任何运算符做运算
+		// console.log(Symbol('wz')+'test');//报错
+		// console.log(Symbol('wz')+100);//报错  不能做任何运算
+
+	//3---作为对象的属性名
+	let yyy = Symbol('yyy');
+	const obj = {};
+	obj[yyy] = 'hello';
+	console.log(obj);
+	console.log(obj[yyy]);
+
+	let sss = Symbol('sss');
+	const data = {
+		[sss]: 'wz',
+		a:1,
+		b:2
+	};
+
+	const data1 = {
+		[Symbol()]: 'wz',
+		a:1,
+		b:2
+	};
+
+	console.log(sss);//Symbol(sss)
+	console.log(data[sss])//wz
+
+	const datas = {
+		[Symbol()]:123
+	};
+	console.log(datas);
+	// console.log(data[Symbol()]);//错误
+
+	for(let i in data){
+		console.log(i);// a b 不能打印Symbol
+	}
+	/*
+		不能被for。。。in循环遍历，虽然不能被遍历，但是也不是私有的属性，可以通过Object.getOwnPropertySymbols方法获得一个对象的所有Symbol属性
+	*/
+	console.log(Object.getOwnPropertySymbols(data));//[Symbol()]
+	console.log(data1[Object.getOwnPropertySymbols(data1)[0]]);//wz
+
+
+
+
+
+</script>
+</html>

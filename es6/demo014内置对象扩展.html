@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>内置对象扩展</title>
+</head>
+<body>
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</body>
+<script>
+	/*
+		字符串的扩展
+	*/
+
+	// 模板字符串
+	let flag = true;
+	let html = `<ul>
+		<li>${'首页'}</li>
+		<li class="${flag ? 'show' : 'hide'}"></li>
+		<ul>`;
+	console.log(html);
+
+	// repeat  重复
+	let str1 = 'aaa';
+	let str2 = str1.repeat(3);
+	console.log(str2);
+
+	// includes()是否包含  startsWith()开头是否包含  endsWith()结尾是否包含
+	let str3 = 'wztest';
+	console.log(str3.includes('st'));//true
+	console.log(str3.startsWith('st'));//false
+	console.log(str3.endsWith('st'));//true
+
+	/*
+		数组的扩展
+	*/
+
+	// Array.from()
+	var lis = document.querySelectorAll('li');
+	console.log(Array.isArray(lis));//false
+	var lis2 = Array.from(lis);
+	console.log(lis2);
+	console.log(Array.isArray(lis2));//true
+
+	// Array.of()
+	const arr = Array.of(1,2);
+	console.log(arr);// [1, 2]
+
+
+	// find()  findIndex()
+	const arr1 = [1,2,3,4];
+	let res = arr.find(function(a){
+		return a < 2;
+	})
+	console.log(res);
+
+	let res1 = arr.findIndex(function(a){//返回的是下标，如果没有返回undefined
+		return a < 2;
+	})
+	console.log(res1);
+
+
+	// fill()
+	const arr2 = [1,2,3,4];
+	// arr2.fill('abc');
+	console.log(arr2);//["abc", "abc", "abc", "abc"]
+	arr2.fill('abc',1,3);//从1开始，不包括3
+	console.log(arr2);//[1, "abc", "abc", 4]  
+
+
+	/*
+		对象的扩展
+	*/
+
+	// 对象的简洁表示方法
+	let a = 1;
+	const obj = {//key value一样简写
+		a
+	}
+	console.log(obj);
+
+	const obj1 = {
+		fn:function(){
+			console.log(1);
+		},
+		fn2:function(){
+			console.log(2);
+		}
+	}
+	obj1.fn();
+
+	// Object.is()  判断是否一样（长的）
+	console.log(Object.is(NaN,NaN));//true
+	console.log(Object.is(+0,-0));//false
+
+	// Object.assign()  用于对象的合并，将源对象的所有可枚举属性，复制到目标对象
+	let obj2 = {a:1};
+	let obj3 = {a:1,b:2};
+	let obj4 = {c:'abc'};
+	Object.assign(obj2,obj3,obj4);
+	console.log(obj2);//{a: 1, b: 2, c: "abc"}
+
+
+</script>
+</html>

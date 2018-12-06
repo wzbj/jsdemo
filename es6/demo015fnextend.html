@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>函数的扩展</title>
+</head>
+<body>
+	
+</body>
+<script>
+	/*
+		函数的扩展
+			1.为函数参数指定默认值
+			2.函数的rest参数
+			3.箭头函数
+	*/
+
+	// ------------------------------------------------------------------------
+	function fn(a,b){
+		a = a || 10;
+		b = b || 20;
+		console.log(a+b);
+	}
+	fn(0,10);//20  0是false
+
+	function fn1(a=10,b=20){
+		console.log(a+b);
+	}
+	fn1(0,10);//10
+
+	// reset 参数形式为("...变量名"),用于获取函数的多余参数，这样就不用使用arguments对象了。
+		// reset参数搭配的变量是一个数组,该变量将多余的参数放入数组中
+	function sum(){
+		var args = arguments;
+		var res = 0;
+		for(var i=0; i< args.length;i++){
+			res += args[i];
+		}
+		console.log(res);
+	}
+	sum(1,2,3);
+
+	function sum1(...arr){//可以在...arr前面加一个参数
+		var res = 0;
+		for(var i=0; i<arr.length; i++){
+			res += arr[i];
+		}
+		console.log(res);
+	}
+	sum1(1,2,3,4);
+
+	// ---------------------------------------------------------------------------------
+	//使用箭头函数
+	var arr3 = [5,4,3,2,1];
+	var arr4 = [5,4,3,2,1];
+	arr3.sort(function(a,b){
+		return a-b;
+	})
+	console.log(arr3);
+
+	arr4.sort((a,b) => a - b);
+	console.log(arr4);
+	// 箭头函数体内没有自己的this对象，所以在使用的时候，其内部的this就是定义时所在的环境的对象，而不是使用时的环境对象
+	function fnn(){
+		setTimeout(function(){
+			console.log(this);
+		},1000);
+		setTimeout(() => {
+			console.log(this);
+		},1000);
+	}
+	var obj11 = {a:1};
+	fnn.call(obj11);
+
+	// 1.不能给箭头函数使用call,apply,bind 去改变其内部this指向
+
+	// 2.箭头函数体内也没有arguments对象，如果要用，可以用Rest参数代替
+	function fnn1(){
+		setTimeout(() => {
+			console.log(arguments);
+		},1000);
+	}
+	fnn1(1,2,3);
+
+	const fnn2 = (...arr) => arr;
+	console.log(fnn2(1,2,3,5));
+
+	// 3.不可以当做构造函数，不可以使用new命令，否则会抛出错误
+
+
+
+
+
+
+</script>
+</html>
