@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Generator</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	// new Promise( (resolve,reject) => {
+	// 	setTimeout( () => {
+	// 		console.log(1);
+	// 		resolve(100);
+	// 		// reject();
+	// 	},1000)
+	// }).then( data => {
+	// 	console.log(data);
+	// },() => {
+	// 	console.log(3);
+	// })
+
+
+	let p1 = new Promise((resolve,reject) => {
+		setTimeout(function(){
+			resolve(1);
+		},Math.random() * 1000)
+	})
+
+	let p2 = new Promise((resolve,reject) => {
+		setTimeout(function(){
+			resolve(2);
+		},Math.random() * 1000)
+	})
+
+	// Array.every
+	// Promise.all([p1,p2]).then( data => {
+	// 	console.log(data);
+	// },err => {
+	// 	console.log(err);
+	// })
+
+	// Array.some
+	// Promise.race([p1,p2]).then( data => {//谁先运行完执行哪个
+	// 	console.log(data);
+	// },err => {
+	// 	console.log(err);
+	// })
+
+
+	/*
+		Generator函数
+			在形式上，Generator是一个普通函数，但是有两个特征
+				-function命令与函数名之间有一个星号
+				-函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态
+		迭代
+			Generator返回一个迭代函数，调用next方法才能执行Generator函数中的每一个yield
+
+	*/
+
+	function* fn(){
+		console.log(1);
+
+		// yield console.log(2);
+		yield getData();
+
+		console.log(3);
+	}
+
+	function getData(){
+		setTimeout(() => {
+			f.next();
+		},1000);
+	}
+
+	// 返回一个迭代器函数
+	let f = fn();
+	// f.next();
+
+</script>
+</html>
