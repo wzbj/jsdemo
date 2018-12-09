@@ -7,8 +7,9 @@
 
 const EventEmmiter = require('events');
 
-class Person{
+class Person extends EventEmmiter{
 	constructor(name){
+		super();
 		this.name = name;
 		this.age = 0;
 
@@ -18,14 +19,19 @@ class Person{
 	growup(){
 		setInterval(()=>{
 			this.age++;
+			this.emit('growup');
 		},1000)
 	}
 
 
 }
 
+p1.setMaxListeners(1);//最大监听数
+
 const p1 = new Person('wzz');
 
 p1.addListener('growup',function(){
-
+	console.log('长大了一岁');
 })
+
+console.log(p1.eventNames());//返回当前
