@@ -21,5 +21,23 @@
 	00000000  -> 11111111
 */
 
-let bf1 = new Buffer(8);
-console.log(bf1);
+// let bf1 = new Buffer(8);
+// console.log(bf1);
+
+// let bf2 = new Buffer('wz');
+// console.log(bf2);
+
+
+// let bf4 = new Buffer(10);
+// bf4.fill(96,2,4);//默认以0填充
+// console.log(bf4);
+
+
+let bf5 = Buffer.from('wz');
+let bf6 = Buffer.from('wz');
+console.log(bf5==bf6);//比较地址false
+
+console.log(bf5.equals(bf5));//比较的是值true
+
+console.log('苗伟'.length);
+console.log(Buffer.byteLength('苗伟'))

@@ -3,6 +3,12 @@
 		事件是整个node.js的核心，node.js中大部分模块都使用或继承了该模块(类似)
 		使用：
 			require('event')
+		EventEmitter类
+		.emit(eventName[,...args])
+		.addListener(eventName,listener)
+		.on(eventName,listener)
+		.off(eventName,listener)
+		.removeListener(eventName,listener)
 */
 
 const EventEmmiter = require('events');
