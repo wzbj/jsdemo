@@ -41,3 +41,18 @@ console.log(bf5.equals(bf5));//比较的是值true
 
 console.log('苗伟'.length);
 console.log(Buffer.byteLength('苗伟'))
+
+var bf7 = new Buffer('wztest');
+console.log(bf7.toJSON());
+console.log(bf7);
+var bf8 = bf7.slice(2,4);//返回一个新的buffer，这个buffer将会和老的buffer引用相同的内存地址，注意：修改这个新的buffer市里的切片，也会改变原来的buffer
+console.log(bf8);
+
+// buffer.copy()  buffer的靠背
+var bf9 = new Buffer('wzzz');
+console.log(bf9);
+
+console.log();
+
+
+
