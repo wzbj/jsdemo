@@ -52,7 +52,15 @@ console.log(bf8);
 var bf9 = new Buffer('wzzz');
 console.log(bf9);
 
-console.log();
+/*
+	类方法,静态方法
+*/
+console.log(Buffer.isEncoding('utf-8'));//true
+console.log(Buffer.isEncoding('gbk'));//fakse
 
+var arr = [1,2,3];
+var bf11 = new Buffer(10);
+console.log(Buffer.isBuffer(arr));//false
+console.log(Buffer.isBuffer(bf11));//true
 
 
