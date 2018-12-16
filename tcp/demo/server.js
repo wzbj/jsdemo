@@ -4,6 +4,7 @@
 */
 
 const net = require('net');
+const fs = require('fs');
 
 /*
 	创建一个服务器
@@ -32,8 +33,21 @@ const server = net.createServer( () => {
 
 
 //当有客户端连接的时候触发
-server.on('connection',() => {
+server.on('connection',socket => {
+	// socket =>当前连接的socket对象
 	console.log('有人连接');
+	socket.write('hello');
+
+	socket.on('data', data => {
+		// socket.write('show me the moeny');
+		// console.log(data,socket.remoteAddress,socket.remotePort);
+		// 发送一个照片给客户端
+		let datas = fs.readFileSync('./1.jpg');
+		console.log(datas);
+		socket.write(datas);
+	})
+
+
 })
 
 

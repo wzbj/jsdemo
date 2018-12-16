@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="/static/{{datas.skin}}">
+</head>
+<body>
+	<!-- set name =  -->
+	<h1>{{datas.appName}}</h1>
+	<a href="/add">添加新任务</a>
+	<hr />
+	{% for task in datas.tasks %}
+		
+		<!-- {% if task.done %}
+			{% set name = 'done' %}
+		{% else %}
+			{% set name = '' %}
+		{% endif%} -->
+
+		{% if task.done %}
+			<li class="{{name}}">
+				<input type="checkbox" checked name="">
+				[{{task.id}}] - {{task.title}} 
+				<a href="">删除</a>
+			</li>
+		{% else %}
+			<li class="{{name}}">
+				<input type="checkbox" name="">
+				[{{task.id}}] - {{task.title}} 
+				<a href="">删除</a>
+			</li>
+		{% endif%}
+		
+	{% endfor %}
+</body>
+</html>

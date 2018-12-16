@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>添加</title>
+	<link rel="stylesheet" type="text/css" href="/static/{{datas.skin}}">
+</head>
+<body>
+	<!-- set name =  -->
+	<h1>{{datas.appName}}</h1>
+	<a href="/add">添加新任务</a>
+	<hr />
+	<!-- 
+		我们可以通过url中querystring传递地址以外的数据
+
+		当我们通过表单发送一个请求的时候：
+			当method为get的时候，表单会把表单中的数据通过表单name=表单值
+			的形式天津爱到actiond地址的？后面
+			/posttask?title=11
+		但是url的长度有限制的，所以querystring的长度也是有限制的，数据量比较
+		打的内容是不推荐使用querystring的方式进行传输
+		get请求会会缓存，所以get请求的时候，url中的内容也会被缓存 
+
+	 -->
+	<form action="/posttask" method="POST">
+		<input type="text" name="title">
+		<button>添加</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>list - {{Math.random()}}</h1>
+
+<ul>
+	{% for user in users %}
+	<li>{{user.username}}</li>
+	{% endfor %}
+</ul>
+</body>
+<script type="text/javascript">
+
+/*
+koa-swig模板引擎
+	循环
+		{% for x in y %} {% endfor %}
+		{%for key,val in data %}
+	内置变量
+		loop.index: 从1计算
+		loop.index0：从0计算
+		loop.length:长度
+	继承
+		{% extends "base.html" %}
+		{% block name %}{% endblock %}
+		类似的方法，子模板的重写
+
+*/
+</script>
+</html>

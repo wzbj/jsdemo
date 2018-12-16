@@ -21,5 +21,10 @@
 	Electron&Node.js
 		在Electron中，Electron同时为主进程与渲染进程暴露了node.js的所有接口，也就是说，我们可以在
 		Electron的主进程与渲染进程中使用node.js的API
-		
+
+*/
+
+/*
+	app对象
+	
 */
