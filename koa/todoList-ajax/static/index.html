@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <h1>TodoList</h1>
+        <hr />
+        <ul>
+            <li v-for="todo in todos">
+                <input type="checkbox" @click="toggle()" :checked="todo.done">
+                <span>{{todo.title}}</span>
+                <button>删除</button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <button>获取数据</button> -->
+
+    <script>
+        // var button = document.querySelector('button');
+        // button.onclick = function(){
+        //     fetch('/').then(res => {
+        //         console.log(res);
+        //         return res.text();
+        //     }).then( data => {
+        //         console.log(data);
+        //     })
+        // }
+
+        new Vue({
+            el:'#app',
+            data:{
+                todos:[]
+            },
+            created(){
+                // 页面初始化的时候就发送一个请求，请求任务列表数据
+                // 通过什么方式从后端哪去数据：http方法，http的url，需不要带数据给后端
+                // 上面这个接口，api
+                fetch('/todos').then(res => {
+                    return res.json();
+                }).then(data => {
+                    // console.log(data);
+                    if(!data.code){
+                        this.todos = data.data;
+                    }
+                })
+
+            },
+            methods:{
+                toggle(id){
+                    // 发送请求到后端，修改当前数据的状态
+                    
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

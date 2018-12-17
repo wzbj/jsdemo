@@ -19,18 +19,24 @@
 
 		{% if task.done %}
 			<li class="{{name}}">
-				<input type="checkbox" checked name="">
+				<input type="checkbox" onclick="change({{task.id}})" checked name="">
 				[{{task.id}}] - {{task.title}} 
-				<a href="">删除</a>
+				<a href="/remove/{{task.id}}">删除</a>
 			</li>
 		{% else %}
 			<li class="{{name}}">
-				<input type="checkbox" name="">
+				<input type="checkbox"  onclick="change({{task.id}})" name="">
 				[{{task.id}}] - {{task.title}} 
-				<a href="">删除</a>
+				<a href="/remove/{{task.id}}">删除</a>
 			</li>
 		{% endif%}
 		
 	{% endfor %}
+
+	<script>
+		function change(id){
+			window.location.href = '/change/'+id;
+		}
+	</script>
 </body>
 </html>

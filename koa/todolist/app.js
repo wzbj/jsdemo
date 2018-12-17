@@ -31,6 +31,7 @@ const router = new Router();
 */
 
 let datas = {
+	maxId:4,
 	appName:'todoList',
 	skin:'index.css',
 	tasks:[
@@ -79,23 +80,61 @@ router.get('/add',async ctx => {
 	添加，处理通过添加页面提交的数据
 */
 router.post('/posttask',async ctx => {
+	// querystring与当前请求的方式是没有关系的,无论是get还是post,querystring都可以传递数据
 	// let title = ctx.query.title;//get请求
-	let title = ctx.request.body.title;
-	ctx.body = '接受提交的新任务'+title;
+	// let title1 = ctx.query.title;
+	let title = ctx.request.body.title || '';
+	// ctx.body = '接受提交的新任务'+title1;
+
+	if(!title){
+		ctx.body = await ctx.render('message',{
+			msg:'请输入任务标题',
+			href:'javascript:history.back()'
+		});
+		return;
+	}
+
+	datas.tasks.push({
+		id:++datas.maxId,
+		title:ctx.request.body.title,
+		done:false
+	})
+
+	ctx.body = await ctx.render('message',{
+		msg:'添加成功',
+		href:'/'
+	})
 })
 
 /*
 	改变，修改任务的状态
 */
-router.get('/change/:id',ctx => {
-	ctx.body = '/change/'+ ctx.params.id;
+router.get('/change/:id', ctx => {
+	// ctx.body = '/change/'+ ctx.params.id;
+
+	let id = ctx.params.id;
+	datas.tasks.forEach(task => {
+		if(task.id == id){
+			task.done = !task.done;
+		}
+	});
+	ctx.redirect('/');
+	ctx.request.redirect('/');
 })
 
 /*
 	删除
 */
-router.get('/remove/:id',ctx => {
-	ctx.body = '/remove/'+ ctx.params.id;
+router.get('/remove/:id',async ctx => {
+	// ctx.body = '/remove/'+ ctx.params.id;
+	let id = ctx.params.id;
+
+	datas.tasks = datas.tasks.filter(task => task.id != id);
+
+	ctx.body = await ctx.render('message',{
+		msg:'删除成功',
+		href:'/'
+	})
 })
 
 app.use(router.routes());
