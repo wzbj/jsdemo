@@ -2,6 +2,7 @@ const koa = require('koa');
 const StaticCache = require('koa-static-cache');
 const bodyParser = require('koa-bodyParser');
 const Router = require('koa-router');
+const fs = require('fs');
 
 
 /**
@@ -14,14 +15,16 @@ const Router = require('koa-router');
  * 
  */
 
-let datas = {
-    _id:3,
-    todos: [
-        {id:1,title:'学习node',done:true},
-        {id:2,title:'学习koa',done:false},
-        {id:3,title:'学习mysql',done:false}
-    ]
-}
+// let datas = {
+//     _id:3,
+//     todos: [
+//         {id:1,title:'学习node',done:true},
+//         {id:2,title:'学习koa',done:false},
+//         {id:3,title:'学习mysql',done:false}
+//     ]
+// }
+
+let datas = JSON.parse(fs.readFileSync('./data/data.json'));
 
 const app = new koa();
 
@@ -46,7 +49,7 @@ router.get('/todos',async ctx => {
     };
 })
 
-router.post('/toggle', ctx => {
+router.post('/toggle',async ctx => {
     let id = ctx.request.body.id || 0;
     if(!id){
         ctx.body = {
@@ -62,6 +65,53 @@ router.post('/toggle', ctx => {
         code:0,
         data:todo
     }
+
+    fs.writeFileSync('./data/data.json',JSON.stringify(datas));
+
+})
+
+router.post('/remove',async ctx => {
+    let id = ctx.request.body.id || 0;
+    if(!id){
+        ctx.body = {
+            code:1,
+            data:'请传入id'
+        }
+        return;
+    }
+
+    datas.todos = datas.todos.filter(todo => todo.id != id);
+    ctx.body = {
+        code:0,
+        data:'删除成功'
+    }
+    fs.writeFileSync('./data/data.json',JSON.stringify(datas));
+})
+
+router.post('/add',async ctx => {
+    let title = ctx.request.body.title || '';
+    
+    if(!title){
+        ctx.body = {
+            code:1,
+            data:'请传入任务标题'
+        }
+        return;
+    }
+
+    let newTask = {
+        id:++datas._id,
+        title,
+        done:false
+    };
+    datas.todos.push(newTask);
+    // datas._id = newTask.id;
+    ctx.body = {
+        code:0,
+        data:newTask
+    }
+
+    fs.writeFileSync('./data/data.json',JSON.stringify(datas));
 
 })
 

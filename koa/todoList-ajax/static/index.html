@@ -12,12 +12,17 @@
 <body>
     <div id="app">
         <h1>TodoList</h1>
+        <div>
+            <input type="text" v-model="newTask">
+            <button @click="add(newTask)">提交</button>
+        </div>
         <hr />
         <ul>
             <li v-for="todo in todos">
-                <input type="checkbox" @click="toggle()" :checked="todo.done">
+                <!-- .prevent阻止默认事件 -->
+                <input type="checkbox" @click.prevent="toggle(todo.id)" :checked="todo.done">
                 <span>{{todo.title}}</span>
-                <button>删除</button>
+                <button @click="remove(todo.id)">删除</button>
             </li>
         </ul>
     </div>
@@ -38,6 +43,7 @@
         new Vue({
             el:'#app',
             data:{
+                newTask:'',
                 todos:[]
             },
             created(){
@@ -57,7 +63,59 @@
             methods:{
                 toggle(id){
                     // 发送请求到后端，修改当前数据的状态
-                    
+                    fetch('/toggle',{
+                        method:'post',
+                        headers:{
+                            'Content-Type':'application/json;charset=utf-8'
+                        },
+                        body:JSON.stringify({id:id})
+                    }).then(res => {
+                        return res.json();
+                    }).then( data => {
+                        console.log(data.code);
+                        if(data.code){
+                            alert(data.data);
+                        }else{
+                            let todo = this.todos.find( todo => todo.id == id);
+                            todo.done = data.data.done;
+                        }
+                    })
+                },
+                remove(id){
+                    fetch('/remove',{
+                        method:'post',
+                        headers:{
+                            'Content-Type':'application/json;charset=utf-8'
+                        },
+                        body:JSON.stringify({id:id})
+                    }).then(res => {
+                        return res.json();
+                    }).then( data => {
+                        console.log(data.code);
+                        if(data.code){
+                            alert(data.data);
+                        }else{
+                            let todo = this.todos.find( todo => todo.id == id);
+                            this.todos = this.todos.filter( todo => todo.id != id)
+                        }
+                    })
+                },
+                add(newTask){
+                    fetch('/add',{
+                        method:'post',
+                        headers:{
+                            'Content-Type':'application/json;charset=utf-8'
+                        },
+                        body:JSON.stringify({title:this.newTask})
+                    }).then(res => {
+                        return res.json();
+                    }).then( data => {
+                        if(data.code){
+                            alert(data.data);
+                        }else{
+                            this.todos.push(data.data);
+                        }
+                    })
                 }
             }
         })
