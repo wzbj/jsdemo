@@ -68,6 +68,30 @@
         }
 
     })
+
+    router.post('/remove',async ctx => {
+        const id = ctx.request.body.id || 0;
+        console.log(id);
+        if(!id){//没有接收到id
+            ctx.body = {
+                code:1,
+                data:'删除失败'
+            }
+        }
+        let del = await connection.query("DELETE FROM todos WHERE id = "+id+" ");
+        if(del){
+            // 删除成功逻辑
+            ctx.body = {
+                code:0,
+                data:'删除成功'
+            }
+        }else{
+            ctx.body = {
+                code:1,
+                data:'删除失败'
+            }
+        }
+    })
   
     
     app.use(router.routes());
@@ -75,3 +99,4 @@
     console.log('服务已启动...');
 
 })()
+

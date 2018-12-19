@@ -16,6 +16,7 @@
         <ul>
             <li v-for="todo of todos" :key="todo.id">
                 <span>{{todo.title}}</span>
+                <button @click="remove(todo.id)">删除</button>
             </li>
         </ul>
     </div>
@@ -54,6 +55,22 @@
                     }
                 })
                 this.newValue = '';
+            },
+            remove(id){
+                fetch('/remove',{
+                    method:'post',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({id:id})
+                }).then(res => {
+                    return res.json();
+                }).then(data => {
+                    // console.log(data);
+                    if(!data.code){
+                        this.getData();
+                    }
+                })
             }
         }
     })
