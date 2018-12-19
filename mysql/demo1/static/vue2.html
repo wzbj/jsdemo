@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>留言板</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{message}}</p>
+        <p>{{test.ketang}}</p>
+    </div>
+
+    <script>
+        /*
+            数据的方法：push pop
+        */
+        let list = [
+            {
+                id:123,
+                title:'今天很开心'
+            },
+            {
+                id:456,
+                title:'今天很痛苦'
+            },
+        ]
+        let vm =new Vue({
+            el:'#app',
+            data:{
+                message:'hello',
+                test:{}
+            },
+            create:{
+
+            },
+            methods:{
+               
+            }
+        })
+
+        // vm.test.ketang = 'node';//这样说是不能够响应的
+
+        // 调用VUe的静态方法set
+        // 语法:Vue.set(target,prop,value)
+        // Vue.set(vm.test,'ketang','node');
+        // 调用实例上的方法 $set
+        // vm.$set(vm.test,'ketang','node');
+
+        // 改写属性的值，重新赋值
+        // vm.test = {ketang:'node'}
+
+        vm.test = Object.assign(vm.test,{ketang:'新的'})
+        // vm.test = Object.assign({},vm.test,{ketang:'新的'})
+
+        /*
+            var o = Object.assign(vm.test,{ketang:'新的'});
+            o这个返回值就是vm.test这个对象，所以又赋值给vm.test，
+            并不会重新更新视图，所以在前面加上空对象
+        
+        */
+
+        console.log(vm.test.ketang);//新的
+
+        // 静态方法：挂载在函数上的方法
+        function fn(){
+
+        }
+        // 称这个test方法为静态方法
+        fn.test = function(){
+
+        }
+
+        let arr = new Array;
+        arr.push();
+
+
+        // 静态方式是挂载函数上的方法，调用的时候通过函数调用
+        // 原型上的方法，需要通过实例调用
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <p>{{list}}</p> -->
+        <input type="checkbox" v-model="checked" name="" id="">
+        <p v-if="checked">{{checked}}</p>
+        <p v-show="checked">{{checked}}</p>
+    </div>
+    <script>
+        /*
+            条件判断
+                v-if="表达式"
+                根据表达式的值得真假条件来渲染元素和移除元素
+
+                语法：
+                v-show="表达式"
+                根据表达式的值得真假条件，切换元素的css属性display属性
+
+            初始页面根据条件判断是否要渲染某一块的模板，使用v-if
+            频繁切换模板的显示隐藏，使用v-show
+        
+        
+        */ 
+
+
+
+        // 数据劫持，转成getter/setter
+        let vm = new Vue({
+            el:'#app',
+            data:{//只有计划好的数据，才能做相应的reactive
+                list:[1,2,3],
+                checked:true
+            }
+        })
+        /*
+            提供了观察数组的变异方法，使用这些方法将会出发视图更新
+            push() pop() shift() unshift() splice() sort() reverse()
+            会改变原数组
+        */
+
+        // vm.list.push(1000);
+        /*
+            map,filiter不会改变原数组
+        */ 
+        // vm.list =  vm.list.map(item => item*3);
+        // vm.list[0] = 'test';//不会改变原数组通过下标改变值不行
+
+        // vm.list.splice(0,1,'test');
+
+        // vm.list.length = 1;//length不能改变数组
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>留言板</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="val">
+        <input 
+            type="button" 
+            value="发送" 
+            v-on:click="sendHandle()">
+        <ul>
+            <li v-for="lis in list">{{lis.id}} : {{lis.title}}</li>
+        </ul>
+        {{val}}
+    </div>
+
+    <script>
+        /*
+            数据的方法：push pop
+        */
+        let list = [
+            {
+                id:123,
+                title:'今天很开心'
+            },
+            {
+                id:456,
+                title:'今天很痛苦'
+            },
+        ]
+        new Vue({
+            el:'#app',
+            data:{
+                message:'hello',
+                list,
+                val:''
+            },
+            create:{
+
+            },
+            methods:{
+                sendHandle(){
+                    console.log(this.val);
+                    this.list.push({
+                        id:Date.now(),
+                        title:this.val
+                    })
+                    this.val = '';
+                }
+            }
+        })
+    </script>
+</body>
+</html>
