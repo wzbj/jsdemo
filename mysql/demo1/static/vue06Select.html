@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品筛选</title>
+    <style>
+       .active{
+           background: pink;
+       }    
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+</head>
+<body onselectstart="return false">
+    <div id="app">
+        <section id="section">
+            <nav id="choose">
+                你的选择：
+                <mark @click="removeHandle(key)" v-for="item,key in choose" style="margin-right:3px;">
+                    {{item}}
+                    <a href="javascript:;">X</a>
+                </mark>
+            </nav>
+        </section>
+        <ul id="type">
+            <li v-for="item,index in dataList">
+                {{item.title}} :
+                <a 
+                    href="javascript:;"
+                    v-for="option,i in item.list"
+                    v-bind:class="{active:item.index === i}"
+                    style="margin-right:4px;"
+                    @click="addChooseHandle(option,index,i)"
+                >{{option}}</a>
+            </li>
+        </ul>
+    </div>    
+
+    <script>
+        /*
+            对象key值不能重复
+            {
+                0:'苹果'
+            }
+            思路：用对象来存每一行选中的标签，吧每一行下表作为key值
+
+            需要给数据的每一行添加一个属性，属性用来记录选中的标签
+        */
+       let data = [
+           {
+               title:'品牌',
+               list:["苹果","华为","小米","锤子","vivo","360","乐视","格力","中兴","索尼"]
+           },
+           {
+               title:'尺寸',
+               list:["3.0英寸以下","3.0-3.9英寸","4.0-4.5英寸","4.6-4.9英寸","5.0-5.5英寸","6.0英寸以上"]
+           },
+           {
+               title:'网络',
+               list:["网络3G","双卡单4G","双卡双4G","联通4G","电信4G","移动4G"]
+           }
+       ];
+        //    处理data
+        data.forEach(item => item.index = -1);
+        console.log(data);   
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                dataList:data,
+                choose:{}
+            },
+            methods:{
+                addChooseHandle(option,index,i){
+                    console.log(index);
+                    console.log(option);
+                    // 这样给对象添加属性不会响应
+                    // this.choose[index] = option;
+                    this.$set(this.choose,index,option);
+                    // 找到操作的一行，把这一行的数据中的index，设置为点击标签的下标
+                    this.dataList[index].index = i;
+                },
+                removeHandle(key){
+                    console.log(key);
+                    console.log(this.choose);
+                    // 删除对象的属性
+                    this.$delete(this.choose,key);
+                    this.dataList[key].index = -1;
+                }
+              
+            }
+        })
+    </script>
+</body>
+</html>

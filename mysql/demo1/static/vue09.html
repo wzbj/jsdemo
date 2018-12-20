@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>{{news.title}}</h2>
+        <ul>
+            <li v-for="value,index in news.list">{{value}}</li>
+        </ul>
+    </div>
+
+    <script>
+        /* 
+            响应式原理
+        
+        */
+        var data = {
+            title:'新闻',
+            list:['歌手','歌手','歌手','歌手','歌手','歌手']
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                news:data
+            },
+            computed:{
+
+            },
+            method:{
+
+            },
+            created(){
+
+            }
+        })
+        console.log(vm);
+        console.log(vm.news);
+        console.log(vm.$data.news);
+    </script>
+</body>
+</html>

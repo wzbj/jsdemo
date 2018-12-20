@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>好友列表</title>
+    <style>
+       body,
+       ul,
+       li,
+       h2{
+           margin: 0;
+           padding: 0;
+       }
+       li{
+           list-style: none;
+       }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="message">
+        <p>{{message}}</p>
+        <p>{{message.split('').reverse().join('')}}</p>
+        <p>{{reverseMessage}}</p>
+        <P>{{message}}</P>
+        <p>{{list.map(item => item * 2).filter(item => item < 10)}}</p>
+        <p>{{id}}</p>
+      
+    </div>    
+
+    <script>
+        /* 
+            计算属性：
+                作用：把对处理数据的逻辑抽离在计算属性中，使得模板更加轻量易读
+
+            定义计算属性：
+                computed
+            
+            对计算属性操作
+                只给计算属性一个函数，默认这个函数是在取值的时候触发的,这个函数是get函数
+                设置值
+                    set(){}
+                取值
+                    get(){}
+
+        */
+
+         
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                message:'abcdefg',
+                list:[1,2,3,4,5],
+                choose:{},
+                id:Date.now()+Math.random()
+            },
+            computed:{
+                // every()方法，的那个数组中每一项都满足某个条件，返回true，只有一项不满足，就返回false
+
+                // 定义了计算属性，没有使用，那不会执行这个函数
+                reverseMessage(){//计算属性挂在到实例上
+                    // 计算属性对应的函数this都指向实例
+                    return this.message.split('').reverse().join('')；
+                }
+            },
+            methods:{
+                
+              
+            }
+        })
+    </script>
+</body>
+</html>

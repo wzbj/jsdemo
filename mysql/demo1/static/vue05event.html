@@ -12,7 +12,8 @@
 </head>
 <body>
     <div id="app">
-        
+        <button @click="test">测试事件</button>
+        <button @click="test2($event,123)">测试事件</button>
     </div>    
 
     <script>
@@ -21,14 +22,18 @@
         let vm = new Vue({
             el:'#app',
             data:{
-                tabData,
                 index:0//控制让哪一个面板显示的
             },
             methods:{
-                tabHandle(i){
-                    this.index = i;
-                    // console.log(1);
-                }
+               test(ev){
+                   console.log(ev);
+                   console.log(this);
+               },
+               test2(ev,num){//如果test有参数，这个ev接受的是传过来的参数，不是事件对象了
+                   console.log(ev);
+                   console.log(this);
+                   console.log(num);
+               }
             }
         })
     </script>
