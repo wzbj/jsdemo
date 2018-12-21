@@ -20,6 +20,27 @@
             响应式原理
         
         */
+
+        /*
+            Object.defineProperty
+            作用：直接在一个对象上定义一个新属性，或者修改一个对象的现有属性
+            Object.defineProperty(data,'title'{
+                //数据描述
+                configurable:false,//false不被删除
+                value:'重新定义了'，
+                enumerable:false,//是否可以被枚举
+                writable:false,//是否可以被改变((false是不能改变)
+
+            })
+
+            访问器描述
+                getter是一种获得属性值得方法
+                setter是一种设置属性值的方法
+                可以写configurable，enumerable
+                不能写value，writable
+
+        */
+
         var data = {
             title:'新闻',
             list:['歌手','歌手','歌手','歌手','歌手','歌手']
