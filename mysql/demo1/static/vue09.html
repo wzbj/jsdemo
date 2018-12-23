@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <h2>{{news.title}}</h2>
+        <p v-text="message"></p>
         <ul>
             <li v-for="value,index in news.list">{{value}}</li>
         </ul>
     </div>
-
+    
     <script>
         /* 
             响应式原理
@@ -39,6 +45,39 @@
                 可以写configurable，enumerable
                 不能写value，writable
 
+            声明式渲染理解
+                1.dom状态指示数据状态的一个映射
+                2.所有的逻辑尽可能在状态的层面去进行
+                3.当状态改变了，view会被框架自动更新到合理的状态
+
+            var arr = [1,2,3,4];
+            //命令式
+            var newArr = [];
+            for(var i=0;i<arr.length;i++){
+                newArr.push(arr[i]*2);
+            }
+
+            // 声明式
+            let newArr2 = arr.map(item => item*2);
+
+            理解指令
+                1.是一种特殊的自定义行间属性，以v-开头
+                2.将数据和DOM做关联，当表达式的值改变时，响应式地作用在视图
+                3.预期的值为javascript表达式
+                v-bind: 动态的绑定数据，简写为  :
+                v-on:监听DOM事件，简写为@
+                v-for: 对一组数据循环生成对应的结构
+                v-if:根据表达式的值真假条件渲染元素和移出元素
+                v-show：根据表达式的真假条件，切换元素的css属性display属性
+                v-text：更新元素的textContent，可代替{{}}
+                v-html: 更新元素的innerHTML
+                        不使用这个指令，插入的html结构不作为模板编译，作为文本显示
+                        不要插入不安全的html结构
+                v-cloak 隐藏未编译的Mustache标签知道实例准备完毕
+                v-once 只渲染一次，虽有数据改变将不再重新渲染，视为静态内容，用于优化更新性能
+
+
+
         */
 
         var data = {
@@ -49,6 +88,7 @@
         let vm = new Vue({
             el:'#app',
             data:{
+                message:'hello',
                 news:data
             },
             computed:{

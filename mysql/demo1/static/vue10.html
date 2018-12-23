@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件修饰</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="fn">测试事件</button>
+        <a @click.prevent="prevent" href="http://www.baidu.com">百度</a>
+        <a @click.prevent href="http://www.baidu.com">百度111</a>
+        <div @click="demo1">
+            demo1
+            <div @click="demo2">
+                demo2
+                <div @click="demo3">
+                    demo3
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    /* 
+        事件修饰符
+            方法只有纯粹的数据逻辑，而不是去处理Dom事件细节
+            @事件名.修饰符.修饰符 = ''
+
+            语法：v-on:事件名.修饰符="事件处理函数"
+                .stop .prevent .capture(捕获) .self .once .esc .space .up .down .left .right
+    */ 
+    var message = 'hello';
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            message
+        },
+        methods:{
+            fn(){
+                alert(1);
+            },
+            prevent(ev){
+                ev.preventDefault();
+            },
+            demo1(){
+                console.log('demo1');
+            },
+            demo2(){
+                console.log('demo2');
+            },
+            demo3(){
+                console.log('demo3');
+            }
+        }
+    })
+</script>
+</html>
