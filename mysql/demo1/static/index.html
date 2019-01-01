@@ -6,6 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>App</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <style>
+        .done span{
+            text-decoration: line-through;
+            color: #ccc;
+        }
+        .pages a{
+            margin-right: 25px;
+        }
+        .pages a.active{
+            color: red;
+        }
+        .footer{
+            margin: 10px;
+        }
+        .footer button.active{
+            background: pink;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -14,11 +32,20 @@
         <button @click="add()">添加新任务</button>
         <hr>
         <ul>
-            <li v-for="todo of todos" :key="todo.id">
-                <span>{{todo.title}}</span>
+            <li v-for="todo of todos" :key="todo.id" :class="{done:todo.done}">
+                <input type="checkbox" :checked="todo.done" @click.prevent="toggle(todo.id,!todo.done)" />
+                <span>#{{todo.id}}--{{todo.title}}</span>
                 <button @click="remove(todo.id)">删除</button>
             </li>
         </ul>
+        <div class="pages">
+            <a href="" :class="{active:n===page}" @click.prevent="changePage(n)" v-for="n of pages">{{n}}</a>
+        </div>
+        <div class="footer">
+            <button :class="{active:type===''}" @click="changeType('')">所有</button>
+            <button :class="{active:type===1}" @click="changeType(1)">已完成</button>
+            <button :class="{active:type===0}" @click="changeType(0)">未完成</button>
+        </div>
     </div>
 
     <script>
@@ -26,17 +53,30 @@
         el:'#app',
         data:{
             newValue:'',
+            page:1,
+            pages:0,
+            type:'',
             todos:[]
         },
         created(){
-            this.getData();
+            this.getData(this.page);
         },
+        // computed:{
+        //     async todos(){
+        //         return await getData(this.page);
+        //     }
+        // },
         methods:{
+            changePage(n){
+                this.page = n;
+                this.getData();
+            },
             getData(){
-                fetch('/todos').then(res => {
+                fetch('/todos?type='+this.type+'&page='+this.page).then(res => {//前后端传递及接受要一致
                     return res.json();
                 }).then(data => {
-                    this.todos = data.data;
+                    this.todos = data.data.todos;
+                    this.pages = data.data.pages;
                 })
             },
             add(){
@@ -51,6 +91,8 @@
                 }).then(data => {
                     // this.todos = data.data;
                     if(!data.code){
+                        this.type = '';
+                        this.page = 1;
                         this.getData();
                     }
                 })
@@ -67,6 +109,26 @@
                     return res.json();
                 }).then(data => {
                     // console.log(data);
+                    if(!data.code){
+                        this.getData();
+                    }
+                })
+            },
+            changeType(type){
+                this.type = type;
+                this.page =1;
+                this.getData();
+            },
+            toggle(id,done){
+                fetch('/toggle',{
+                    method:'post',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({id,done:Number(done)})
+                }).then(res => {
+                    return res.json();
+                }).then(data => {
                     if(!data.code){
                         this.getData();
                     }
