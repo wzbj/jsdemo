@@ -9,23 +9,33 @@
 </head>
 <body>
     <div>
-        <input type="text">
+        <input type="text" id="input">
         <button id="btn">提交</button>
-        <ul></ul>
+        <ul id="ul"></ul>
     </div>
     <script>
-        function page(){//构造函数
+        // M 模型层  V 视图  P 控制器
+        function Page(){//构造函数
 
         }
-        $.extend(page.prototype,{
+        $.extend(Page.prototype,{
             init:function(){
                 this.bindEvents();
             },
             bindEvents:function(){
                 var btn  = $('#btn');
                 btn.on('click',$.proxy(this.handleBtnClick,this))
+            },
+            handleBtnClick:function(){
+                var inputValue = $('#input').val();
+                var ulElem = $('#ul');
+                ulElem.append('<li>'+inputValue+'</li>');
+                $('#input').val('');
+                console.log(123);
             }
         })
+        var page = new Page();
+        page.init();
 
     </script>
 </body>

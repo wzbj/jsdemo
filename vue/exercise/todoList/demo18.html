@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>非父子组件的传递(Bus/总线/发布订阅模式/观察者模式)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <child content="Dell"></child>
+        <child content="Lee"></child>
+    </div>    
+    <script>
+
+        Vue.prototype.bus = new Vue()
+
+        // 每个组件都有bus的属性
+        Vue.component('child',{
+            data:function(){
+                return {
+                    selfContent:this.content
+                }
+            },
+            props:{
+                content:String
+            },
+            template:'<div @click="handleClick">{{selfContent}}</div>',
+            methods:{
+                handleClick:function(){
+                    this.bus.$emit('change',this.selfContent);//this.bus是一个实例了
+                }
+            },
+            mounted:function(){
+                var this_ = this;
+                this.bus.$on('change',function(msg){
+                    this_.selfContent = msg;
+                })
+            }
+        })
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                
+            },
+            methods:{
+                handleDivClick:function(){
+
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

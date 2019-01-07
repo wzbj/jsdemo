@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的样式绑定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .activated{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- <div @click="handleDivClick"
+            :class="{activated:isActivated}"
+        >
+            Hello World
+        </div> -->
+        <div @click="handleDivClick"
+            :class="[activated,activatedOne]"
+        >
+            Hello World
+        </div>
+    </div>    
+    <script>
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                // isActivated:false
+                activated:'',
+                activatedOne:"activated-one"
+            },
+            methods:{
+                handleDivClick:function(){
+                    // this.isActivated = !this.isActivated;
+                    if(this.activated === "activated"){
+                        this.activated = '';
+                    }else{
+                        this.activated = 'activated';
+                    }
+                    // this.activated = this.activated === "activated" ? '' : 'activated';
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中多个元素或组件的过渡</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/velocity.min.js"></script>
+    <style>
+        .v-enter,.v-leave-to{
+            opacity: 0;
+        }
+        .v-enter-active,.v-leave-active{
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- <transition mode="in-out"> -->
+        <transition mode="out-in">
+            <!-- <div v-if="show" key="hello">Hello World</div>
+            <div v-else key="bye">Bye Word</div> -->
+            <component :is="type"></component>
+            <!-- <child v-if="show" key="hello">Hello World</child>
+            <child-one v-else key="bye">Bye Word</child-one> -->
+
+        </transition>
+        <button @click="handleClick">toggle</button>
+    </div>    
+    <script>
+
+        Vue.component('child',{
+            template:'<div>child</div>'
+        })
+
+        Vue.component('child-one',{
+            template:'<div>child-one</div>'
+        })
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:true,
+                type:'child'
+            },
+            methods:{
+                handleClick:function(){
+                    // this.show = !this.show;
+                    this.type = this.type === 'child' ? 'child-one' : 'child';
+                    console.log(this.type);
+                },
+                handleBeforeEnter:function(el){
+                    el.style.opacity = 0;
+                },
+                handleEnter:function(el,done){
+                    Velocity(el,{
+                        opacity:1
+                    },{
+                        duration:1000,
+                        complete:done
+                    })
+                },
+                handleAfterEnter:function(el){
+                    alert('动画结束');
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

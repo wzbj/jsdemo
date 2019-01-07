@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性，方法，侦听器</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- {{fullName}} -->
+        {{fullName()}}
+        {{age}}
+    </div>    
+    <script>
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                firstName:'Demo',
+                lastName:'Bob',
+                fullName:'Demo Bob',
+                age:28
+            },
+            // 侦听器
+            //watch和computed方法都有缓存功能，但是比comput方法复杂了很多
+            watch:{
+                firstName:function(){
+                    console.log('计算了一次');
+                    this.fullName = this.firstName + ' ' + this.lastName;
+                },
+                lastName:function(){
+                    console.log('计算了一次');
+                    this.fullName = this.firstName + ' ' + this.lastName;
+                }
+            }
+            // 计算属性,是内置缓存的,如果没有发生改变就不重新计算
+            // computed:{
+            //     fullName:function(){
+            //         console.log('计算了一次');
+            //         return this.firstName+' '+ this.lastName;
+            //     }
+            // },
+            /**
+                当只有age改变的时候，computed不会重新计算，methods方法会重新执行
+            
+            */
+            // methods:{
+            //     fullName:function(){
+            //         console.log('methods计算了一次');
+            //         return this.firstName +' '+ this.lastName;
+            //     }
+            // }
+           
+        })
+    </script>
+</body>
+</html>

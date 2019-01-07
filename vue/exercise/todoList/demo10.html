@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的列表渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="root">
+        <div v-for="(item,index) of list" :key="item.id">
+            {{item.id}} -----{{item.title}}
+        </div>
+    </div>    
+    <script>
+            /*
+                vue不能通过操作下标的方法操作数组
+                提供了以下几种方法
+                push
+                pop
+                shift数组第一项删除
+                unshift
+                splice
+                sort
+                reverse
+
+                template 模板占位符，不会显示到页面上
+
+            
+            */
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                list:[
+                    {
+                        id:"001",
+                        title:"aaaaaaaa"
+                    },{
+                        id:"002",
+                        title:"bbbbbbb"
+                    },{
+                        id:"003",
+                        title:"cccc"
+                    }
+                ]
+            },
+            methods:{
+                handleDivClick:function(){
+
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

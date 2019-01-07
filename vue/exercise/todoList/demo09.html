@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue的条件渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="root">
+        <div v-if="show">
+            用户名：<input type="text" key="username">
+        </div>
+        <div v-else>
+            邮箱名：<input type="text" key="com">
+        </div>
+    </div>    
+    <script>
+// vue在重新渲染页面的时候，会尽量复用已有的dom
+// 当加上key值，vue会知道是页面上的唯一元素，如果两个key不一样，vue就不会复用了
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:false
+            },
+            methods:{
+                handleDivClick:function(){
+
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

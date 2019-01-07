@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板语法</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="root">
+        {{test}}
+        <div v-text="test"></div>
+        <div v-html="test"></div>
+    </div>    
+    <script>
+
+        // 生命周期函数就是vue实例在某一个时间点会自动执行的函数
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                test:'<h1>hello w</h1>'
+            }
+           
+        })
+    </script>
+</body>
+</html>

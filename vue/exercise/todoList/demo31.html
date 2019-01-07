@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的动画封装</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        /* .v-enter{
+            opacity: 0;
+        }
+        .v-enter-active{
+            transition:opacity 3s;
+        }
+        .v-leave-to{
+            opacity: 0;
+        }
+        .v-leave-active{
+            transition: opacity 3s;
+        } */
+    </style>
+</head>
+<body>
+    <div id="root">
+        <fade :show = "show">
+            <div>hello world</div>
+        </fade>
+        <fade :show = "show">
+            <h1>hello world</h1>
+        </fade>
+        <button @click="handleChange">切换</button>
+    </div>    
+    <script>
+
+        Vue.component('fade',{
+            props:['show'],
+            template:`
+                <transition @before-enter="handleBeforeEnter"
+                    @enter="handleEnter">
+                    <slot v-if="show"></slot>    
+                </transition>
+            `,
+            methods:{
+                handleBeforeEnter:function(el){
+                    el.style.color= 'red';
+                },
+                handleEnter:function(el,done){
+                    setTimeout(() => {
+                        el.style.color = 'green';
+                        done();
+                    })
+                }
+            }
+        })
+        
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:true
+            },
+            methods:{
+                handleChange:function(){
+                    this.show = !this.show;
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

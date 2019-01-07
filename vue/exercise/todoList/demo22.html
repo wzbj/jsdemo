@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态组件与v-once指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 动态组件形式 -->
+        <!-- <component :is="type"></component> -->
+        <child-one v-if="type === 'child-one'"></child-one>
+        <child-two v-if="type === 'child-two'"></child-two>
+        <button @click="handleChange">change</button>
+    </div>    
+    <script>
+        // v-once  直接放到内存中
+        Vue.component('child-one',{
+            template:'<div v-once>child-one</div>'
+        })
+
+        Vue.component('child-two',{
+            template:'<div v-once>child-two</div>'
+        })
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                type:'child-one'
+            },
+            methods:{
+                handleChange:function(){
+                    this.type = (this.type === 'child-one' ? 'child-two' : 'child-one');
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>
