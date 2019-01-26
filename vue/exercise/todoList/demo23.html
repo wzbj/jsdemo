@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的CSS动画原理</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .fade-enter{
+            opacity: 0;
+        }
+        .fade-enter-active{
+            transition:opacity 3s;
+        }
+        .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- 如果没有name="fade",样式定义用v-enter -->
+        <transition name="fade">
+            <div v-if="show">hello world</div>
+        </transition>
+        <button @click="handleChange">切换</button>
+    </div>    
+    <script>
+        /*
+            transition:自动构建一个动画流程
+            
+        
+        */ 
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:true
+            },
+            methods:{
+                handleChange:function(){
+                    this.show = !this.show;
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

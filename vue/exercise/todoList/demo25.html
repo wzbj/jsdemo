@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中使用animate.css库</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/anmite.css">
+</head>
+<body>
+    <div id="root">
+        <!-- 如果没有name="fade",样式定义用v-enter -->
+        <transition name="fade"
+                    enter-active-class="animated swing"
+                    leave-active-class="animated shake" >
+            <div v-if="show">hello world</div>
+        </transition>
+        <button @click="handleChange">切换</button>
+    </div>    
+    <script>
+        /*
+            transition:自动构建一个动画流程
+            
+        
+        */ 
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:true
+            },
+            methods:{
+                handleChange:function(){
+                    this.show = !this.show;
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

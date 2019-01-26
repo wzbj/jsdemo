@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父子组件传值</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 父组件通过属性的方法像子组件传值，不加冒号传给子组件的是字符串，加冒号是数字 -->
+        <counter @change="hanleIncrease" :count="3"></counter>
+        <counter @change="hanleIncrease" :count="2"></counter>
+        <div>{{total}}</div>
+    </div>    
+    <script>
+/*
+   vue单向数据流： 父组件可以向子组件任意传值，但子组件不能修改父组件传递的值
+   父组件传过来的值子组件复制一份
+
+    子组件通过事件改变向父组件传值
+
+
+*/
+        var counter = {
+            props:['count'],
+            data:function(){
+                return {
+                    number:this.count
+                }
+            },
+            template:'<div @click="handleClick">{{number}}</div>',
+            methods:{
+                handleClick:function(){
+                    this.number = this.number+2;
+                    this.$emit('change',2)
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                total:5
+            },
+            components:{
+                counter:counter
+            },
+            methods:{
+                hanleIncrease:function(step){
+                    this.total = this.total + step;
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

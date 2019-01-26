@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件参数校验与非props特性</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <child content="hell"></child>
+    </div>    
+    <script>
+        /*
+            props特性
+                当你的父组件使用组件的时候，通过属性向子组件传值的时候，恰好子组件里声明了对父组件传递过来的属性的接受，父子组件有个对应关系
+            props特性的特点：
+            非props特性：
+                子组件并没有接收父组件传递的内容，传递的内容会展示在子组件的最外层
+
+        
+        */
+
+        Vue.component('child',{
+            props:{
+                // content:String//content必须是字符串
+                // content:[Number,String]//要么是字符串，要么是数字
+                content:{
+                    type:String,//这个组件接受一个接受一个content，它必须是string类型
+                    // required:true,//content是必须要传的
+                    // default:'default value'
+                    validator:function(value){//要求传入的字符串的长度必须大于5
+                        return (value.length > 5)
+                    }
+                }
+            },
+            template:'<div>{{content}}</div>'
+        })
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                
+            },
+            methods:{
+                handleDivClick:function(){
+
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

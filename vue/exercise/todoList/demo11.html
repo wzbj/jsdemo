@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue的列表循环</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="root">
+        <div v-for="(item,key,index) of userInfo">
+            {{item}}---{{key}}---{{index}}
+        </div>
+        <div v-for="item of user">
+            {{item}}
+        </div>
+    </div>    
+    <script>
+        /*
+            改变数组或者对象
+            Vue.set()
+            vm.$set()
+        */
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                userInfo:{
+                    name:"bob",
+                    age:24,
+                    gender:'male',
+                    salary:111111
+                },
+                user:[1,2,3,4]
+            },
+            methods:{
+                handleDivClick:function(){
+
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

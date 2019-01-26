@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的作用域插槽</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <child>
+            <!-- 声明从接受的数据放到props -->
+            <template slot-scope="props">
+                <h1>{{props.item}}</h1>
+            </template>
+        </child>
+    </div>    
+    <script>
+        Vue.component('child',{
+            data:function(){
+                return {
+                    list:[1,2,3,4]
+                }
+            },
+            // 当子组件做循环或者某一部分dom结构应该由外部决定的时候
+            template:`<div>
+                        <ul>
+                            <slot 
+                                v-for="item of list"
+                                :item=item
+                            ></slot>
+                        </ul>
+                    </div>`
+        })
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                
+            },
+            methods:{
+                handleDivClick:function(){
+
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

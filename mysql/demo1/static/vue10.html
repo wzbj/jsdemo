@@ -12,15 +12,17 @@
         <button @click="fn">测试事件</button>
         <a @click.prevent="prevent" href="http://www.baidu.com">百度</a>
         <a @click.prevent href="http://www.baidu.com">百度111</a>
-        <div @click="demo1">
+        <div @click.capture="demo1">
             demo1
-            <div @click="demo2">
+            <div @click.self="demo2">
                 demo2
-                <div @click="demo3">
+                <div @click.stop="demo3">
                     demo3
                 </div>
             </div>
         </div>
+
+        <input type="text" @keyup.enter="uphandle">
     </div>
 </body>
 <script>
@@ -53,6 +55,9 @@
             },
             demo3(){
                 console.log('demo3');
+            },
+            uphandle(ev){
+                console.log(ev.keyCode);
             }
         }
     })

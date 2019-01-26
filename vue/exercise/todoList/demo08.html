@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的条件渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="root">
+        <div v-if="show === 'a'">A</div>
+        <div v-else-if="show ==='b'">B</div>
+        <div v-else>C</div>
+        <div v-if="show"
+            @click="handleDivClick">
+            {{message}}
+        </div>
+        <div v-else>Bye </div>
+        <div v-show="show">{{message}}</div>
+    </div>    
+    <script>
+// v-if v-else必须紧挨这写，中间不能有东西间隔
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:false,
+                message:"Hello World"
+            },
+            methods:{
+                handleDivClick:function(){
+
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>
