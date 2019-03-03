@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require("passport");
 const app = express();
 
 // 引入users.js
@@ -13,16 +14,20 @@ const db = require("./config/keys").mongoURI;
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+
 // connect to mongodb
-mongoose.connect(db)
+mongoose.connect(db,{ useNewUrlParser: true })
         .then(() => console.log("MongoDB Connected"))
         .catch(err => console.log(err));
 
+// passport初始化
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
 
-app.get("/",(req,res) => {
-  res.send("hello worlds");
-})
+// app.get("/",(req,res) => {
+//   res.send("hello worlds");
+// })
 
 // 使用routes
 app.use("/api/users",users)
