@@ -5,8 +5,11 @@
 </template>
 
 <script>
+import Register from './Register'
 export default {
 	name: "index",
-	components:{}
+	components:{
+    Register
+  }
 };
 </script>
