@@ -9,7 +9,8 @@ const types = {
 }
 
 const state = {
-  isAuthenticated: false
+  isAuthenticated: false,
+  user: {}
 }
 
 const getters = {
@@ -30,10 +31,14 @@ const mutations = {
 
 const actions = {
   setAuthentivated: ({commit}, isAuthenticated) => {
-    commit(type.SET_AUTHENTICATED,isAuthenticated);
+    commit(types.SET_AUTHENTICATED,isAuthenticated);
   },
   setUser:({commit}, user) => {
-    commit(types.SET_USER,user);
+    commit(types.SET_USER, user);
+  },
+  clearCurrentState:({commit}) => {
+    commit(types.SET_AUTHENTICATED, false);
+    commit(types.SET_USER, null);
   }
 }
 

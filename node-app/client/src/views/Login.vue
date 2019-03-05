@@ -66,7 +66,10 @@ export default {
                 // 解析token
                 const decoded = jwt_decode(token);
                 console.log(decoded);
-                this.$store.dispatch("setAuthentivated")
+
+                // token存储到vue中
+                this.$store.dispatch("setAuthentivated",!this.isEmpty(decoded));
+                this.$store.dispatch("setUser",decoded);
 
                 this.$router.push('/index');
               })
