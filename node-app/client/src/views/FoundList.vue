@@ -1,9 +1,31 @@
 <template>
 	<div class="fillContainer">
     <div>
-      <el-form :inline="true" ref="add_data">
+      <el-form :inline="true" ref="add_data" :model="search_data">
+        <!-- 按照时间筛选 -->
+        <el-form-item label="按照时间筛选">
+          <el-date-picker
+              v-model="search_data.startTime"
+              type="datetime"
+              placeholder="选择开始时间">
+          </el-date-picker> --
+          <el-date-picker
+              v-model="search_data.endTime"
+              type="datetime"
+              placeholder="选择结束时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" size="small" icon="search" @click="handleSearch()">搜索</el-button>
+        </el-form-item>
         <el-form-item class="btnRight">
-          <el-button type="primary" size="small" icon="view" @click="handleAdd()">添加</el-button>
+          <el-button
+            type="primary"
+            size="small" 
+            icon="view" 
+            @click="handleAdd()"
+            v-if="user.identity == 'manager'"
+          >添加</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -81,7 +103,9 @@
           align="center"
           fixed="right"
           width="180"
-          label="操作">
+          label="操作"
+          v-if="user.identity == 'manager'"
+        >
           <template slot-scope="scope">
             <el-button
               type="warning"
@@ -134,6 +158,8 @@ export default {
         layout:"total,sizes,prev,pager,next,jumper" //翻页属性
       },
       tableData:[],
+      allTableData:[],
+      filterTableData:[],
       dialog:{
         show:false,
         title:"",
@@ -147,7 +173,16 @@ export default {
         cash:"",
         remark:"",
         id:""
+      },
+      search_data: {
+        startTime: "",
+        endTime: ""
       }
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
     }
   },
   created() {
@@ -158,9 +193,22 @@ export default {
       // 获取表格数据
       this.$axios.get("/api/profiles")
           .then(res => {
-            this.tableData = res.data;
+            this.allTableData = res.data;
+            this.filterTableData = res.data;
+            // 设置分页数据
+            this.setPaginations();
           })
           .catch(err => console.log(err))
+    },
+    setPaginations(){
+      // 分页属性设置
+      this.paginations.total = this.allTableData.length;
+      this.paginations.page_index = 1;
+      this.paginations.page_size = 5;
+      // 设置默认的分页数据
+      this.tableData = this.allTableData.filter((item,index) => {
+        return index < this.paginations.page_size;
+      })
     },
     handleEdit(index, row){
       // console.log(index,row.cash);
@@ -210,9 +258,47 @@ export default {
       }
     },
     handleSizeChange(page_size){
-
+      // 切换size
+      this.paginations.page_index = 1;
+      this.paginations.page_size = page_size;
+      this.tableData = this.allTableData.filter((item,index) => {
+        return index < page_size;
+      })
     },
     handleCurrentChange(page) {
+      // 获取当前页
+      let index = this.paginations.page_size*(page - 1);
+      // 数据的总数
+      let nums = this.paginations.page_size * page;
+      // 容器
+      let tables = [];
+      
+      for(let i = index;i<nums;i++){
+        if(this.allTableData[i]) {
+          tables.push(this.allTableData[i])
+        }
+        this.tableData = tables;
+      }
+    },
+    handleSearch(){
+      // 筛选
+      if(!this.search_data.startTime || !this.search_data.endTime){
+        this.$message({
+          type:"warning",
+          message:"请选择时间区间"
+        });
+        this.getProfile();
+        return;
+      }
+      const sTime = this.search_data.startTime.getTime();
+      const eTime = this.search_data.endTime.getTime();
+      this.allTableData = this.filterTableData.filter(item => {
+        let date = new Date(item.date)
+        let time = date.getTime();
+        return time >= sTime && time <= eTime;
+        
+      })
+      this.setPaginations();
 
     }
   }
