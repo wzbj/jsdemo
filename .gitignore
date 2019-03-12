@@ -3,6 +3,8 @@ node_modules/
 dist/
 node-app/node_modules/
 node-app/client/node_modules/
+backManage/client/node_modules/
+backManage/server/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
