@@ -48,14 +48,32 @@ export default {
           let _this = this;
           // console.log(this.axios)
           // 发送给后端
-          this.axios.post('/api/checklogin',{
+          _this.axios.post('/api/checklogin',{
             params: {
               username: _this.loginForm.username,
               password: _this.loginForm.password
             }
           })
           .then(res => {
-            console.log('后端响应')
+            _this.$message({
+              type:'success',
+              message:'登陆成功'
+            })
+            let userMsg = {
+              username:_this.loginForm.username,
+              password:_this.loginForm.password
+            }
+            // console.log(userinfo)
+            // 把用户信息存入本地存储
+            // localStorage.setItem('userinfo',JSON.stringify(userMsg))
+
+            // let userinfo = JSON.parse(localStorage.getItem('userinfo'))
+            // 把当前用户信息存入store
+            _this.$store.commit('SAVE_USERINFO',userMsg)
+            // 跳转到首页
+            _this.$router.push('/')
+
+            console.log(_this.loginForm.username)
           })
 
         } else {

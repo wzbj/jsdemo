@@ -15,7 +15,7 @@ module.exports = {
         target: 'http://localhost:8888/',  //目标接口域名
         changeOrigin: true,  //是否跨域
         pathRewrite: {
-          '^/api': ' '   //重写接口
+          '^/api': ''   //重写接口
         }
       }
     },

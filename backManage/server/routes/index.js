@@ -7,7 +7,14 @@ var router = express.Router();
 // });
 
 router.post('/checklogin', (req,res) => {
-	res.send(1);
+	console.log(req.body)
+	// let {username, password } = req.body;
+	var response = {status:200,data:[{
+		'username':req.body.username,
+		'password':req.body.password
+	}]};
+	console.log(response)
+	res.send(JSON.stringify(response));
 });
 
 module.exports = router;
